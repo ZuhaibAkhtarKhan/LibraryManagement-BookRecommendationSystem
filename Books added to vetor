@@ -1,0 +1,123 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <array>
+
+using namespace std;
+
+// vector used to store data for the type to enter as well as what is the name to enter pair used because condition is checked in pair of name and password
+vector<pair<string, string>> users = {
+    {"admin", "adminpass"}, // Admin user
+    {"john", "studentpass"}, //student
+    {"alice", "studentpass"} // student
+};
+
+//vector used because its size is variable. A vector library books is now declared that contains all available books with the book name, author and its genre
+
+vector<availableBooks> libraryBooks = {
+    {"The Great Gatsby", "F. Scott Fitzgerald", "Classic", "Fiction" };
+    {"To Kill a Mockingbird", "Harper Lee", "Classic", "Fiction" };
+    {"1984", "George Orwell", "Dystopian", "Fiction" };
+    {"Pride and Prejudice", "Jane Austen", "Romance", "Fiction"};
+    {"Clean Code", "Robert C. Martin","Object-Oriented Programming"};
+    {"The Hobbit", "J.R.R. Tolkien", "Classic" , "Fantasy";
+}
+
+// Function to authenticate users
+bool authenticateUser (const string& username, const string& password) {
+    for (const auto& user : users) {
+        if (user.first == username && user.second == password) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Function to register new users
+void registerUser () {
+    string username, password;
+    cout << "Enter new username: ";
+    cin >> username;
+    cout << "Enter new password: ";
+    cin >> password;
+    users.push_back({username, password});
+    cout << "Registration successful!\n";
+}
+
+// Function to display the library menu for students
+void displayStudentMenu() {
+    cout << "Student Library Menu" << endl;
+    cout << "1. Browse Books\n";
+    cout << "2. Check Out Books\n";
+    cout << "3. Return Books\n";
+    cout << "4.  Exit\n";
+}
+
+// Function to display the library menu for admins
+void displayAdminMenu() {
+    cout << "Admin Library Menu" << endl;
+     cout << "1. View booklist\n";
+     cout << "2. Search for a book\n";
+     cout << "3. Modify/Add book\n";
+    cout << "4. Issue book\n"; 
+    cout << "5. Return book\n";
+}
+
+int main() {
+    string username, password;
+    int choice;
+
+    cout << "Welcome to the Library!\n";
+    cout << "Do you wish to login or register? (1 for login, 2 for register): \n";
+
+    cout << "Enter your choice: ";
+    cin >> choice;
+
+    if (choice == 1) {
+        cout << "Enter your username: ";
+        cin >> username;
+
+        cout << "Enter your password: ";
+        cin >> password;
+
+        if (authenticateUser (username, password)) {
+            cout << "Login successful!\n";
+
+            // Check if the user is admin or student
+            if (username == "admin") {
+                while (true) {
+                    displayAdminMenu();
+                    int adminChoice;
+                    cout << "Enter your choice: ";
+                    cin >> adminChoice;
+                    if (adminChoice == 1) {
+                        break; // Exit for admin
+                    } else {
+                        cout << "Invalid choice. Please try again.\n";
+                    }
+                }
+            } else {
+                while (true) {
+                    displayStudentMenu();
+                    int studentChoice;
+                    cout << "Enter your choice: ";
+                    cin >> studentChoice;
+                    if (studentChoice == 4) {
+                        break; // Exit for student
+                    } else {
+                        // Placeholder: Implement actual library functionality here based on the user's choice
+                        cout << "You chose option " << studentChoice << endl;
+                    }
+                }
+            }
+        } else {
+            cout << "Invalid username or password.\n";
+        }
+    } else if (choice == 2) {
+        registerUser (); // Call registerUser  function
+    } else {
+        cout << "Invalid choice.\n";
+    }
+
+    return 0;
+}
