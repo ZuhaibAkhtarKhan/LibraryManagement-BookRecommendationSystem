@@ -139,28 +139,42 @@ bool VerifyPass(){
 }
 
 void Signup(){
-    string username, password;
-    lib.open("pass.txt", ios:: app);
-
-    if(!lib.is_open()){
-        cout<<"error opening the file";
-    }
+    ifstream file;
+    string username, password, line;
+    bool existsFlag=false;
 
     cout<<"Please Enter Your Username: ";
     cin.ignore();
     getline(cin, username);
-    lib<<username<<endl;
     
     cout<<"Please Enter Your Password: ";
     getline(cin, password);
-    lib<<password<<endl;
-    
 
-    lib.close();
-    
-    cout<<"You've signed up succesfully Mr."<<username;
-    int menu();
-    return;
+    file.open("pass.txt");
+
+    while(getline(file, line)){
+        if(line.find(username)!= string::npos){
+            existsFlag = true;
+        }
+    }
+    file.close();
+    if(existsFlag){
+        cout<<"username not available."<<endl;
+        //hamza here.
+    }
+    else{
+        lib.open("pass.txt", ios:: app);
+        if(!lib.is_open()){
+        cerr<<"error opening the file";
+        }
+        lib<<endl<<username;
+        lib<<endl<<password;
+        lib.close();
+        
+        cout<<"You've signed up succesfully Mr."<<username;
+        int menu();
+        return;
+    }
 
 }
 void StudentLogin(){
