@@ -141,7 +141,7 @@ bool VerifyPass(){
 
 void Signup(){
     string username, password;
-    lib.open("library.txt", ios:: app);
+    lib.open("pass.txt", ios:: app);
 
     if(!lib.is_open()){
         cout<<"error opening the file";
@@ -266,9 +266,9 @@ void returnBook(){
     string book,line, genre;
     bool flag=false;
     int option;
-    cout<<"would you like to see the list of books?";
-    cout<<"1.Yes";
-    cout<<"2.No";
+    cout<<"would you like to see the list of books?"<<endl;
+    cout<<"1.Yes"<<endl;
+    cout<<"2.No"<<endl;
     cin>>option;
     if(option==1){
         availableBook_list();
@@ -277,12 +277,13 @@ void returnBook(){
     cin.ignore();
     getline(cin,book);
     cout<<"Please specify the genre as well."<<endl;
-    cin.ignore();
+    
     getline(cin,genre);
     
     if(lib.is_open()){
         while(getline(lib,line)){
             if(line.find(book)!=string::npos){
+                lib.close();
                 DeleteBookReturn(book);
                 returnAdd(book, genre);
                 flag=true;
@@ -301,8 +302,9 @@ void addbooks(){
     ifstream file;
     string line, book,genre;
     bool flag= false;
-    
+   
     cout<<"Please enter the book you would like to add"<<endl;
+    cin.ignore();
     getline(cin, book);
     cout<<"Please enter the genre of the book"<<endl;
     getline(cin, genre);
@@ -326,7 +328,6 @@ void addbooks(){
         file.close();
         if(flag==false){
             lib.open("library.txt", ios::app);
-            
                 lib<<book<<" 0 "<<genre;
                 lib.close();
         
@@ -403,12 +404,7 @@ void DeleteBook() {
     }
 }
 void DeleteBookReturn(string bookName) {
-    ofstream tempFile;
-
-    // // enter book name to delete
-    // cout << "Enter the name of the book to delete: ";
-    // cin.ignore(); // Clear the input buffer
-    // getline(cin, bookName);
+    fstream tempFile;
 
     // Open the original file to read existing books
     lib.open("library.txt", ios::in);
@@ -418,7 +414,7 @@ void DeleteBookReturn(string bookName) {
     }
 
     // make a temp file to write remaining books
-    tempFile.open("temp.txt");
+    tempFile.open("temp.txt", ios::out);
     if (!tempFile.is_open()) {
         cout << "Error creating temporary file" << endl;
         lib.close();
@@ -426,6 +422,7 @@ void DeleteBookReturn(string bookName) {
     }
 
     string line;
+    bool found = false;
 
     //each line is read and writeen to the temp. file if it doesnt match the book we want to delte 
     while (getline(lib, line)) {
@@ -440,6 +437,8 @@ void DeleteBookReturn(string bookName) {
     // Replace the original file with the temporary file
     remove("library.txt"); // Delete the original file
     rename("temp.txt", "library.txt"); // Rename the temporary file
+
+   return;
 }
 
 void availableBook_list(){
