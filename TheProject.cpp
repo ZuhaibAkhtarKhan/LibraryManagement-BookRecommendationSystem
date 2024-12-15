@@ -9,7 +9,7 @@
 using namespace std;
 
 fstream lib;
-bool adminFlag= false, issueFlag=false;
+bool adminFlag= false;
 
 int menu();
 void AdminLogin();
@@ -239,7 +239,6 @@ void issueBook(){
                 }
                 else if(issued==0){
                     lib.close();
-                    issueFlag=true;
                     cout<<"This book has been issued to you"<<endl;
                     DeleteBookReturn(book);
                     issueAdd(book, genre);                     
@@ -420,7 +419,6 @@ void DeleteBookReturn(string bookName) {
     }
 
     string line;
-    bool found = false;
 
     //each line is read and writeen to the temp. file if it doesnt match the book we want to delte 
     while (getline(lib, line)) {
