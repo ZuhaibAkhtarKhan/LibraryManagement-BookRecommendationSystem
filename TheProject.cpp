@@ -124,8 +124,6 @@ bool VerifyPass(){
             line++;
         }
         lib.close();
-        cout<<validUsername<<" "<<validPassword;
-
         adminFlag= false;
 
         if(validUsername && validPassword){
