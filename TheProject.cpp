@@ -9,7 +9,7 @@
 using namespace std;
 
 fstream lib;
-bool adminFlag= false;
+bool adminFlag= false, studentLogFlag = false, adminLogFlag= false;
 
 int menu();
 void AdminLogin();
@@ -65,13 +65,14 @@ void AdminLogin(){
 
     int option;
     adminFlag=true;
-    if(VerifyPass()){
+    if(adminLogFlag || VerifyPass()){
         cout<<".........Please Select An Option......... \n";
         cout<<"......... 1.Add Books.........\n";
         cout<<"......... 2.Delete Books.........\n";
         cout<<"......... 3.List of books.........\n";
         cout<<"......... 4.Search Books.........\n";
         cin>> option;
+        adminLogFlag=true;
 
         switch(option){
             case 1: addbooks();
@@ -164,11 +165,12 @@ void Signup(){
 }
 void StudentLogin(){
     int option;
-    if(VerifyPass()){
+    if(studentLogFlag || VerifyPass()){
         cout<<"......... Please Select An Option......... \n";
         cout<<"......... 1.Issue a Book.........\n";
         cout<<"......... 2.Return a Book.........\n";
         cin>> option;
+        studentLogFlag = true;
 
         switch(option){
             case 1: issueBook();
