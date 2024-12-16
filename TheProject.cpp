@@ -341,6 +341,7 @@ void returnBook(){
             }
         }
         if(!flag){
+            lib.close();
             cout<<"book does not exist in our directory."<<endl;
         }
     }
