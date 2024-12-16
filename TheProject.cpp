@@ -51,6 +51,8 @@ int menu(){
                 return 0;
         case 3: Signup();
                 return 0;
+        
+        case 4: return 0;
         default:cout<<"User Input not recognized.\n";
                 cout<<"Try again.\n";
                 counter=1;
@@ -70,7 +72,8 @@ void AdminLogin(){
         cout<<"......... 1.Add Books.........\n";
         cout<<"......... 2.Delete Books.........\n";
         cout<<"......... 3.List of books.........\n";
-        cout<<"......... 4.Search Books.........\n";
+        cout<<"......... 4.Main Menu.........\n";
+
         cin>> option;
         adminLogFlag=true;
 
@@ -81,8 +84,11 @@ void AdminLogin(){
                     return;
             case 3: availableBook_list();
                 return;
-            default: cout<<"input not valid.";
-    }
+            case 4: menu();
+            default: { 
+                cout<<"input not valid.\n";
+                menu();
+            }
 
     }
 }
@@ -109,6 +115,16 @@ bool VerifyPass(){
 
         if(!lib.is_open()){
             cout<<"could not open file";
+            
+            int c;
+            cout<<"Do you want to return to Main Menu \n?"<<endl;
+            cout<<"Press 1 for Yes\n"<<endl;
+            cout<<"Press 2 for No : ";
+            cin>>c;
+
+            if(c == 1){
+                return menu();
+            }
             return 0;
         }
         
@@ -139,6 +155,11 @@ bool VerifyPass(){
 }
 
 void Signup(){
+
+    int n;
+
+    do{
+        
     ifstream file;
     string username, password, line;
     bool existsFlag=false;
@@ -171,18 +192,29 @@ void Signup(){
         lib<<endl<<password;
         lib.close();
         
-        cout<<"You've signed up succesfully Mr."<<username;
-        int menu();
-        return;
+        cout<<"You've signed up succesfully Mr."<<username<<endl;
+
+     cout<<"Press 1 to Return to main menu "<<endl;
+    cout<<"Press 2 to Create another account : ";
+    cin>>n;
+
+    }
+    
+    }while(n==2);
+
+     menu();
+        
     }
 
-}
+
 void StudentLogin(){
     int option;
     if(studentLogFlag || VerifyPass()){
         cout<<"......... Please Select An Option......... \n";
         cout<<"......... 1.Issue a Book.........\n";
         cout<<"......... 2.Return a Book.........\n";
+        cout<<"......... 3.Main Menu.........\n";
+
         cin>> option;
         studentLogFlag = true;
 
@@ -190,6 +222,8 @@ void StudentLogin(){
             case 1: issueBook();
                     return;
             case 2: returnBook();
+                    return;
+            case 3: menu();
                     return;
 
         }
@@ -236,9 +270,10 @@ void issueBook(){
     string book, line, genre;
     do{ 
         cout<<"Which book would you like to issue?"<<endl;
-        cin>>book;
+        cin.ignore();
+        getline(cin, book);
         cout<<"please specify the genre"<<endl;
-        cin>>genre;
+        getline(cin, genre);
 
         lib.open("library.txt", ios::in);
         while(getline(lib, line)){
@@ -275,6 +310,7 @@ void issueBook(){
 }
 
 void returnBook(){
+    int c2;
     lib.open("library.txt", ios::in);
     string book,line, genre;
     bool flag=false;
@@ -309,12 +345,26 @@ void returnBook(){
     else{
         cerr<<"could not open file";
     }
+
+    cout<<"Press 1 to return to Main Menu \n"<<endl;
+    cout<<"Press 2 to return another book : ";
+    cin>>c2;
+    if(c2 == 2 ){
+        returnBook();
+    }
+    else if(c2 == 1){
+    menu();
+    }
+    return;
 }
 
 void addbooks(){
     ifstream file;
     string line, book,genre;
     bool flag= false;
+    int c3;
+
+    do{
    
     cout<<"Please enter the book you would like to add"<<endl;
     cin.ignore();
@@ -347,6 +397,16 @@ void addbooks(){
             
         }
     }
+    cout<<"Press 1 to Add another book  "<<endl;
+    cout<<"Press 2 Return to Main Menu : ";
+    cin>>c3;
+
+    }while(c3 == 1);
+
+    menu();
+
+    return;
+    
     
 }
 void returnAdd(string book, string genre){
@@ -370,6 +430,9 @@ void issueAdd(string book, string genre){
 void DeleteBook() {
     string bookName;
     ofstream tempFile;
+    int c4;
+
+    do{
 
     // enter book name to delete
     cout << "Enter the name of the book to delete: ";
@@ -415,6 +478,16 @@ void DeleteBook() {
     } else {
         cout << "Book not found: " << bookName << endl;
     }
+
+     cout<<"Press 1 to Delete Another Book "<<endl;
+    cout<<"Press 2 to Return to Main Menu : ";
+    cin>>c4;
+
+    }while(c4 == 1);
+
+    menu();
+
+    return;
 }
 void DeleteBookReturn(string bookName) {
     fstream tempFile;
@@ -489,6 +562,7 @@ void availableBook_list(){
     cout<<endl;
     
     string line;
+    int c2;
     while(getline(file, line)){
 
         //string stream "info" that stores data of variable "line"
@@ -517,5 +591,21 @@ void availableBook_list(){
     }
     //close file after reading 
     file.close();
+
+     cout<<endl;
+                cout<<"Do you want to return to Main Menu ?"<<endl;
+                cout<<"Press 1 for Main Menu "<<endl;
+                cout<<"Press 2 to go Back :";
+                cout<<"Press 3 to Exit :";
+                cin>>c2;
+
+                if(c2 == 3){
+                    return;
+                }
+                else if(c2 == 2){
+                    AdminLogin();
+                }
+    
+                 menu();    
 
 }
