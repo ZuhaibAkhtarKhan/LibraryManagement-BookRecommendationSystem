@@ -296,13 +296,14 @@ void issueBook(){
                     DeleteBookReturn(book);
                     issueAdd(book, genre);                     
                 }
-                else{
-                    lib.close();
-                    cout<<"Book does not exist in our directory. Please use - for empty space"<<endl;
-                    cout<<"1.Try again"<<endl;
-                    cout<<"2.Exit"<<endl;
-                    cin>>option;
-                }
+               
+            } 
+            else{
+                lib.close();
+                cout<<"Book does not exist in our directory. Please use - for empty space"<<endl;
+                cout<<"1.Try again"<<endl;
+                cout<<"2.Exit"<<endl;
+                cin>>option;
             }
         }
             
@@ -333,7 +334,7 @@ void returnBook(){
     
     if(lib.is_open()){
         while(getline(lib,line)){
-            if(line.find(book)!=string::npos){
+            if(line.find(book)!=string::npos && checkIssue(book)== 1 ){
                 lib.close();
                 DeleteBookReturn(book);
                 returnAdd(book, genre);
@@ -342,7 +343,7 @@ void returnBook(){
         }
         if(!flag){
             lib.close();
-            cout<<"book does not exist in our directory."<<endl;
+            cout<<"Book does not exist in our directory, or has not been issued."<<endl;
         }
     }
     else{
