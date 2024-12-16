@@ -93,6 +93,8 @@ void AdminLogin(){
     }
 }
 
+}
+
 bool VerifyPass(){
     bool validUsername = false; 
     bool validPassword = false;
