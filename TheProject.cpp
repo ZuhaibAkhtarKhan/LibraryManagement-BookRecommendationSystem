@@ -107,11 +107,11 @@ bool VerifyPass(){
         }
         else{
         cout<<"Please enter your username: ";
-        cin>>username;
+        getline(cin, username);
         }
 
         cout<<"Please enter your password: ";
-        cin>>password;
+        getline(cin, password);
 
         lib.open("pass.txt", ios::in);
 
@@ -555,7 +555,7 @@ void availableBook_list(){
     }
     else if(option==4){
         cout<<"please specify the genre for search: ";
-        cin>>genre;
+        getline(cin, genre);
     }
 
 
