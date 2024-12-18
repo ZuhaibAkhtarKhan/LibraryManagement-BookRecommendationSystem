@@ -269,6 +269,7 @@ int checkIssue(string book){
 
 void issueBook(){
     int option=2;
+    bool found= false;
     string book, line, genre;
     do{ 
         cout<<"Which book would you like to issue?"<<endl;
@@ -280,7 +281,8 @@ void issueBook(){
         lib.open("library.txt", ios::in);
         while(getline(lib, line)){
             int issued = 2;
-            if(line.find(book) != string:: npos){        
+            if(line.find(book) != string:: npos){   
+                found= true;     
                 issued = checkIssue(book);
                 if(issued==1){
                     lib.close();
@@ -297,16 +299,20 @@ void issueBook(){
                     issueAdd(book, genre);                     
                 }
                
-            } 
-            else{
-                lib.close();
-                cout<<"Book does not exist in our directory. Please use - for empty space"<<endl;
-                cout<<"1.Try again"<<endl;
-                cout<<"2.Exit"<<endl;
-                cin>>option;
             }
+                
         }
+        if(found==false){        
+            lib.close();
+            cout<<"Book does not exist in our directory. Please use - for empty space"<<endl;
             
+        }
+        cout<<"1.Would you like to issue again"<<endl;
+        cout<<"2.Return to main menu"<<endl;
+        cin>>option;    
+        if(option==2){
+            menu();
+        }
     }
     while(option!=2);
     
